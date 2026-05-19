@@ -1,0 +1,11 @@
+.flightContainer {
+    background-color: #e9ecef;
+    color: #212529;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.flightName {
+    font-size: 2vw;
+    font-family: sans-serif;
+}
