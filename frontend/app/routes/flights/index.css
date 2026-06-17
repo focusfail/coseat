@@ -1,0 +1,37 @@
+@font-face {
+    font-family: archivo;
+    src: url("/archivo.ttf");
+}
+.rootContainer {
+    display: flex;
+    align-items: center;
+}
+.flightList {
+    display: grid;
+    grid-template-columns: 98vw;
+    grid-template-rows: 1fr 1fr;
+    width: 90;
+    margin: 0 auto;
+    padding-top: 11vh;
+    font-family: archivo;
+    cursor: pointer;
+    gap: 20px;
+}
+@media screen and (min-width: 600px) {
+    .flightList {
+        grid-template-columns: 46vmax 46vmax;
+        grid-template-rows: 1fr 1fr;
+    }
+}
+@media screen and (min-width: 850px) {
+    .flightList {
+        grid-template-columns: 30vmax 30vmax 30vmax;
+        grid-template-rows: 1fr 1fr;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .flightList {
+        grid-template-columns: 23vmax 23vmax 23vmax 23vmax;
+        grid-template-rows: 1fr 1fr;
+    }
+}
