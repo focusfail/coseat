@@ -6,8 +6,8 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]>=0.137.1",
-    "flightdata",
+    "ml",
 ]
 
 [tool.uv.sources]
-flightdata = { path = "../ml" }
+ml = { path = "../ml" }
