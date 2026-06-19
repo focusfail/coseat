@@ -1,0 +1,11 @@
+[project]
+name = "coseat"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.137.2",
+    "torch>=2.12.1",
+]
+
