@@ -1,4 +1,4 @@
-import Plus from './plus'
+import Plus from './Plus'
 import './FileUpload.css'
 import { useState, useRef } from 'react'
 export function FileUpload() {
@@ -6,8 +6,8 @@ export function FileUpload() {
     const [file, setFile] = useState();
     const uploader = useRef<HTMLInputElement>(null);
     return (
-        <div className="fileContainer">
-            <div className="plusIcon" onClick={clickUploader}><Plus/></div>
+        <div className="fileContainer" onClick={clickUploader}>
+            <div className="plusIcon"><Plus className="plus" /></div>
             <input type="file" ref={uploader} onChangeCapture={uploadFile} style={{"display": "none"}}/>
         </div>
     )

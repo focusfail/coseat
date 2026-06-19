@@ -9,9 +9,16 @@
     padding: 15px;
     font-family: archivo;
     border: dashed 2px #1f1f1f;
-    filter: drop-shadow(#aeaeae 0px 0px 10px);
+    filter: drop-shadow(#aeaeae 0px 0px 3px);
 }
-.plus {
-    margin-bottom: 3vh;
-    width: 5vw;
+@media (prefers-color-scheme: dark) {
+    .fileContainer {
+        background-color: #1e1e1e;
+        filter: drop-shadow(#000000 0px 0px 10px);
+        border: dashed 2px rgba(255, 255, 255, 0.15)       
+    }
+    .plus {
+        filter: invert();
+        z-index: 100;
+    }
 }

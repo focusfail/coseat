@@ -8,7 +8,7 @@
     font-family: archivo;
     color: #8e0045;
     border: solid 1px #adadad;
-    filter: drop-shadow(#aeaeae 0px 0px 10px);
+    filter: drop-shadow(#aeaeae 0px 0px 3px);
 }
 .icon {
     margin-bottom: 3px;
@@ -21,13 +21,13 @@
     font-weight: 500;
     gap: 3px;
     align-items: center;
-    font-size: 1.8vmax;
+    font-size: 1.8rem;
 }
 .flightProperty {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    font-size: 1vmin;
+    font-size: 1rem;
 }
 .flexRow {
     display: flex;
@@ -35,12 +35,18 @@
     flex-direction: row;
     gap: 5px;
 }
-.flightAirplane {
-
-}
-.flightLocation {
-
-}
-.flightDuration {
+@media (prefers-color-scheme: dark) {
+    .flightContainer {
+        background-color: #1e1e1e;
+        color: #ff3898;
+        filter: drop-shadow(#000000 0px 0px 10px);
+        border: 1px rgba(255, 255, 255, 0.15)
+    }
+    .flightTitle {
+        color: white;
+    }
+    .icon {
+        filter: invert();
+    }
 
 }

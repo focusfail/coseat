@@ -1,6 +1,5 @@
-@font-face {
-    font-family: archivo;
-    src: url("/archivo.ttf");
+body {
+    background-color: #e7e7e7;
 }
 .rootContainer {
     display: flex;
@@ -17,21 +16,26 @@
     cursor: pointer;
     gap: 20px;
 }
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 710px){
     .flightList {
-        grid-template-columns: 46vmax 46vmax;
+        grid-template-columns: 40vmax 40vmax;
         grid-template-rows: 1fr 1fr;
     }
 }
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 850px) and (orientation: landscape) {
     .flightList {
         grid-template-columns: 30vmax 30vmax 30vmax;
         grid-template-rows: 1fr 1fr;
     }
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1200px) and (orientation: landscape) {
     .flightList {
         grid-template-columns: 23vmax 23vmax 23vmax 23vmax;
         grid-template-rows: 1fr 1fr;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
     }
 }
