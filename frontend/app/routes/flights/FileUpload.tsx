@@ -22,7 +22,7 @@ export function FileUpload() {
             console.log("hi");
             const formData = new FormData();
             formData.append("file", uploader.current.files[0])
-            const request = fetch("/csv", {
+            const request = fetch("/api/csv", {
                 "method": "POST",
                 "body": formData
             })

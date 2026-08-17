@@ -1,7 +1,7 @@
 import "./Flight.css"
 import Takeoff from "./Takeoff"
 import Arrow from "./arrow"
-export function Flight({departureAirport, arrivalAirport, date, endDate}: {departureAirport: String, arrivalAirport: String, date: Date, endDate: Date}) {
+export function Flight({startDate, endDate, airplane, id}: {startDate: Date, endDate: Date, airplane: String, id: String}) {
     function toTimeStr(date: Date) {
         var flightDate = date
         const options = {
@@ -14,20 +14,27 @@ export function Flight({departureAirport, arrivalAirport, date, endDate}: {depar
         return result
     }
     function timeDuration(startDate: Date, endDate: Date) {
-        var timeDiff = startDate.getTime() / 1000 - endDate.getTime() / 1000;
-        var newDate = new Date(null);
-        newDate.setSeconds(timeDiff);
-        var result = newDate.toISOString().slice(12, 19);
-        return result.slice(0, 4) + " Std.";
+        var timeDiff = Math.abs(startDate.getTime() - endDate.getTime())
+        console.log(timeDiff)
+        var seconds = Math.floor((timeDiff / 1000));
+        var minutes = Math.floor(seconds / 60) % 60;
+        var hours = Math.floor(seconds / 3600);
+        if (hours == 0 && minutes == 0) {
+            return seconds + " Sek."
+        }
+        if (hours == 0) {
+            return minutes + " Min."
+        }
+        return hours + " Std. " + minutes + " min.";
     }
     return (
         <div className="flightContainer">
             <span className="flexRow">
-                <span className="flightDuration">{timeDuration(date, endDate)}</span>
+                <span className="flightDuration">{timeDuration(startDate, endDate)}</span>
                 <span>•</span>
-                <span className="flightAirplane">Diamond DA42NG</span>
+                <span className="flightAirplane">{airplane}</span>
             </span>
-            <span className="flightTitle"><Takeoff className="icon"/>{toTimeStr(date)}</span>
+            <span className="flightTitle"><Takeoff className="icon"/>{toTimeStr(startDate)}</span>
         </div>
     )
 }
