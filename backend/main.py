@@ -51,4 +51,4 @@ async def get_flight_list():
 async def get_flight(id: int = 0):
     res = cur.execute("SELECT * from flights WHERE id = (?)", str(id))
     data = res.fetchone()
-    
+    return data
