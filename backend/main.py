@@ -44,5 +44,11 @@ async def create_upload_file(file: UploadFile):
 
 @app.get("/api/flightList")
 async def get_flight_list():
-    res = cur.execute("SELECT id, startDate, endDate, airplane from flights")
+    res = cur.execute("SELECT id, startDate, endDate, airplane, csv from flights")
     return res.fetchall()
+
+@app.get("/api/flight")
+async def get_flight(id: int = 0):
+    res = cur.execute("SELECT * from flights WHERE id = (?)", str(id))
+    data = res.fetchone()
+    

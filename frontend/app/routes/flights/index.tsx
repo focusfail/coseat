@@ -33,7 +33,13 @@ export default function Index() {
     return new Date(firstPart + "T" + secondPart + "Z");
   }
   if (flightList) {
-    flightItems = flightList.map(flight => <Flight key={(flight.id)} startDate={backendDateToJS(flight.startDate)} endDate={backendDateToJS(flight.endDate)} id={flight.id} airplane={flight.airplane}/>)
+    flightItems = flightList.map(flight => 
+      <Flight key={(flight.id)} 
+      fileName={(flight.csv.split("/")[2].slice(0, -5))}
+      startDate={backendDateToJS(flight.startDate)} 
+      endDate={backendDateToJS(flight.endDate)} 
+      id={flight.id} 
+      airplane={flight.airplane}/>)
   }
 
 

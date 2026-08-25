@@ -23,6 +23,9 @@
     align-items: center;
     font-size: 1.8rem;
 }
+.flightFile {
+    color: gray;
+}
 .flightProperty {
     display: flex;
     flex-direction: row;

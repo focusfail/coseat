@@ -1,7 +1,7 @@
 import "./Flight.css"
 import Takeoff from "./Takeoff"
 import Arrow from "./arrow"
-export function Flight({startDate, endDate, airplane, id}: {startDate: Date, endDate: Date, airplane: String, id: String}) {
+export function Flight({startDate, endDate, airplane, fileName, id}: {startDate: Date, endDate: Date, airplane: String, fileName: String, id: String}) {
     function toTimeStr(date: Date) {
         var flightDate = date
         const options = {
@@ -28,13 +28,14 @@ export function Flight({startDate, endDate, airplane, id}: {startDate: Date, end
         return hours + " Std. " + minutes + " min.";
     }
     return (
-        <div className="flightContainer">
+        <div className="flightContainer" onClick={() => {window.location.href = "../flight/" + id}}>
             <span className="flexRow">
                 <span className="flightDuration">{timeDuration(startDate, endDate)}</span>
                 <span>•</span>
                 <span className="flightAirplane">{airplane}</span>
             </span>
             <span className="flightTitle"><Takeoff className="icon"/>{toTimeStr(startDate)}</span>
+            <span className="flightFile">{fileName}</span>
         </div>
     )
 }
