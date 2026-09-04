@@ -2,7 +2,7 @@ run_api:
     uv run fastapi dev ./backend/main.py
 
 serve_frontend:
-    npm --prefix frontend run dev
+    npm --prefix frontend run dev -- --host
 
 serve:
     #!/usr/bin/env bash

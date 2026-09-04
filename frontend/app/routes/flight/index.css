@@ -1,0 +1,21 @@
+.flightTitleDiv {
+    font-size: 5vmin;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 10px;
+}
+.propertyDiv {
+    display: flex;
+    flex-direction: column;
+}
+.propertyTitle {
+    color: #ff3898;
+    font-size: 2.3vmin;
+    font-family: archivo;
+}
+.property {
+    color: white;
+    font-family: archivo;
+    font-size: 4vmin;
+}

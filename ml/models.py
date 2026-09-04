@@ -35,6 +35,8 @@ class EngineData(BaseModel):
 class FlightData(BaseModel):
     engine_0: Optional[EngineData] = None
     engine_1: Optional[EngineData] = None
+    latitude: List[float] = Field(default_factory=list)
+    longitude: List[float] = Field(default_factory=list)
     timestamps: List[str] = Field(default_factory=list)
     airframe_name: str = Field(default_factory=str)
 
@@ -71,6 +73,9 @@ class FlightData(BaseModel):
 
                 date = row.get("Lcl Date")
                 time = row.get("Lcl Time")
+                fd.latitude.append(dict_get_float(row, "Latitude"))
+                fd.longitude.append(dict_get_float(row, "Longitude"))
+                print("append!")
                 fd.timestamps.append(f"{date} {time}")
 
         # Check if plane has 1 or 2 engines

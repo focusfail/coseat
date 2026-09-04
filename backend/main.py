@@ -3,7 +3,9 @@ from ml.models import FlightData
 from tempfile import TemporaryFile
 import sqlite3
 import os
+from pathlib import Path
 import datetime as dt
+import json
 
 app = FastAPI()
 con = sqlite3.connect("coseat.db")
@@ -23,7 +25,7 @@ async def create_upload_file(file: UploadFile):
         os.makedirs("./flights", exist_ok=True)
         filepath = "./flights/" + file.filename[:-4] + ".json"
         with open(filepath, "w") as f:
-            f.write(str(mldata))
+            json.dump(mldata.dict(), f)
 
         print(mldata)
         mljson = mldata.dict()
@@ -51,4 +53,25 @@ async def get_flight_list():
 async def get_flight(id: int = 0):
     res = cur.execute("SELECT * from flights WHERE id = (?)", str(id))
     data = res.fetchone()
-    return data
+    try:
+        with open(data['csv']) as f:
+            s = f.read()
+            return {
+                "id": data['id'],
+                "startDate": data['startDate'],
+                "endDate": data['endDate'],
+                "airplane": data['airplane'], 
+                "json": s,
+            }
+    except IOError as e:
+        return {
+            "id": data['id'],
+            "startDate": data['startDate'],
+            "endDate": data['endDate'],
+            "airplane": data['airplane'], 
+            "error": True,
+            "message": "Could not read file",
+            "fileName": Path(data['csv']).stem,
+            "friendlyMessage": "Konnte die Flugdatei nicht finden. Das Problem lässt sich vermutlich durch ein neues Hochladen lösen."
+        }
+

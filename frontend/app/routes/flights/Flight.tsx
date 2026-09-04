@@ -1,5 +1,7 @@
 import "./Flight.css"
 import Takeoff from "./Takeoff"
+import { timeDuration } from "../../utils/timeDuration"
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Arrow from "./arrow"
 export function Flight({startDate, endDate, airplane, fileName, id}: {startDate: Date, endDate: Date, airplane: String, fileName: String, id: String}) {
     function toTimeStr(date: Date) {
@@ -12,20 +14,6 @@ export function Flight({startDate, endDate, airplane, fileName, id}: {startDate:
         } as const;
         var result = flightDate.toLocaleString("de-DE", options);
         return result
-    }
-    function timeDuration(startDate: Date, endDate: Date) {
-        var timeDiff = Math.abs(startDate.getTime() - endDate.getTime())
-        console.log(timeDiff)
-        var seconds = Math.floor((timeDiff / 1000));
-        var minutes = Math.floor(seconds / 60) % 60;
-        var hours = Math.floor(seconds / 3600);
-        if (hours == 0 && minutes == 0) {
-            return seconds + " Sek."
-        }
-        if (hours == 0) {
-            return minutes + " Min."
-        }
-        return hours + " Std. " + minutes + " min.";
     }
     return (
         <div className="flightContainer" onClick={() => {window.location.href = "../flight/" + id}}>

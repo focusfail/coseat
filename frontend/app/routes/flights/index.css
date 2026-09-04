@@ -1,6 +1,4 @@
-body {
-    background-color: #e7e7e7;
-}
+
 .rootContainer {
     display: flex;
     align-items: center;
@@ -32,10 +30,5 @@ body {
     .flightList {
         grid-template-columns: 23vmax 23vmax 23vmax 23vmax;
         grid-template-rows: 1fr 1fr;
-    }
-}
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #121212;
     }
 }
