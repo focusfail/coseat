@@ -10,7 +10,7 @@
     flex-direction: column;
 }
 .propertyTitle {
-    color: #ff3898;
+    color: #8e0045;
     font-size: 2.3vmin;
     font-family: archivo;
 }
@@ -20,6 +20,9 @@
     font-size: 4vmin;
 }
 @media (prefers-color-scheme: dark) {
+    .propertyTitle {
+        color: #ff3898;
+    }
     .property {
         color: white;
     }

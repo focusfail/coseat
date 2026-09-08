@@ -41,7 +41,7 @@ export default function Index({loaderData}: Route.ComponentProps) {
   const chartData = flightData.timestamps.map((timestamp, index) => ({
     timestamp,
     power: flightData.engine_0.power[index],
-    oil_temp: flightData.engine_0.oil_temperature[index],
+    oil_temperature: flightData.engine_0.oil_temperature[index],
     fuel_flow: flightData.engine_0.fuel_flow[index],
     fuel_pressure: flightData.engine_0.fuel_pressure[index],
     rpm: flightData.engine_0.rpm[index],
@@ -85,6 +85,16 @@ export default function Index({loaderData}: Route.ComponentProps) {
           </span>
         </div>
       </div>
+      <LineChart width={500} height={250} data={chartData}>
+        <Line type="monotone" dataKey="power" stroke="#8884d8" />
+        <Line type="monotone" dataKey="oil_temperature" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="fuel_flow" stroke="#ffc658" />
+        <Line type="monotone" dataKey="fuel_pressure" stroke="#ff7300" />
+        <Line type="monotone" dataKey="rpm" stroke="#00c49f" />
+        <Line type="monotone" dataKey="oil_pressure" stroke="#0088FE" />
+        <YAxis />
+        <Tooltip />
+      </LineChart>
     </>
   )
 }
