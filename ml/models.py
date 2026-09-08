@@ -109,9 +109,6 @@ class FlightData(BaseModel):
 
                 date = row.get("Lcl Date")
                 time = row.get("Lcl Time")
-                fd.latitude.append(dict_get_float(row, "Latitude"))
-                fd.longitude.append(dict_get_float(row, "Longitude"))
-                print("append!")
                 fd.timestamps.append(f"{date} {time}")
 
         # Check if plane has 1 or 2 engines
