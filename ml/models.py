@@ -99,6 +99,7 @@ class FlightData(BaseModel):
                 )
 
                 fd.transform.append_datapoints(
+                    dict_get_float(row, "IAS"),
                     dict_get_float(row, "Latitude"),
                     dict_get_float(row, "Longitude"),
                     dict_get_float(row, "AltInd"),
