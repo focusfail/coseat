@@ -16,7 +16,7 @@ class EngineData(BaseModel):
     oil_temperature: List[float] = Field(default_factory=list)
 
     def append_datapoints(
-        self,
+     self,
         power: float,
         rpm: float,
         fuel_f: float,
@@ -31,12 +31,35 @@ class EngineData(BaseModel):
         self.oil_pressure.append(oil_p)
         self.oil_temperature.append(oil_t)
 
+class TransformData(BaseModel):
+    lat: List[float] = Field(default_factory=list)
+    lon: List[float] = Field(default_factory=list)
+    alt: List[float] = Field(default_factory=list)
+    pitch: List[float] = Field(default_factory=list)
+    roll: List[float] = Field(default_factory=list)
+    vspd: List[float] = Field(default_factory=list)
+
+    def append_datapoints(
+     self,
+        lat: float,
+        lon: float,
+        alt: float,
+        pitch: float,
+        roll: float,
+        vspd: float,
+    ):
+        self.lat.append(lat)
+        self.lon.append(lon)
+        self.alt.append(alt)
+        self.pitch.append(pitch)
+        self.roll.append(roll)
+        self.vspd.append(vspd)
+
 
 class FlightData(BaseModel):
     engine_0: Optional[EngineData] = None
     engine_1: Optional[EngineData] = None
-    latitude: List[float] = Field(default_factory=list)
-    longitude: List[float] = Field(default_factory=list)
+    transform: TransformData = None
     timestamps: List[str] = Field(default_factory=list)
     airframe_name: str = Field(default_factory=str)
 
@@ -45,6 +68,7 @@ class FlightData(BaseModel):
         fd = FlightData()
         fd.engine_0 = EngineData()
         fd.engine_1 = EngineData()
+        fd.transform = TransformData()
 
         with open(path, "r") as csvfile:
             info_line = csvfile.readline()
@@ -69,6 +93,15 @@ class FlightData(BaseModel):
                     dict_get_float(row, "E2 OilP"),
                     dict_get_float(row, "E2 FFlow"),
                     dict_get_float(row, "E2 FPres"),
+                )
+
+                fd.transform.append_datapoints(
+                    dict_get_float(row, "Latitude"),
+                    dict_get_float(row, "Longitude"),
+                    dict_get_float(row, "AltInd"),
+                    dict_get_float(row, "Pitch"),
+                    dict_get_float(row, "Roll"),
+                    dict_get_float(row, "VSpd"),
                 )
 
                 date = row.get("Lcl Date")
