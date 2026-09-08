@@ -32,6 +32,7 @@ class EngineData(BaseModel):
         self.oil_temperature.append(oil_t)
 
 class TransformData(BaseModel):
+    ias: List[float] = Field(default_factory=list)
     lat: List[float] = Field(default_factory=list)
     lon: List[float] = Field(default_factory=list)
     alt: List[float] = Field(default_factory=list)
@@ -41,6 +42,7 @@ class TransformData(BaseModel):
 
     def append_datapoints(
      self,
+        ias: float,
         lat: float,
         lon: float,
         alt: float,
@@ -48,6 +50,7 @@ class TransformData(BaseModel):
         roll: float,
         vspd: float,
     ):
+        self.ias.append(ias)
         self.lat.append(lat)
         self.lon.append(lon)
         self.alt.append(alt)
