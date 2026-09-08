@@ -2,7 +2,6 @@ import { useParams } from "react-router";
 import './index.css'
 import {Line, LineChart, Tooltip, YAxis} from 'recharts';
 import { timeDuration } from "../../utils/timeDuration";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
 export async function clientLoader({params}: Route.LoaderArgs) {
   const request = fetch("/api/flight?id=" + params.flightId, {
     method: "GET",

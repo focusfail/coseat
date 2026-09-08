@@ -2,7 +2,7 @@ frontend/node_modules
 *.venv/
 *.lock
 *__pycache__/
-
+*.db
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,venv,react

@@ -1,7 +1,6 @@
 import "./Flight.css"
 import Takeoff from "./Takeoff"
 import { timeDuration } from "../../utils/timeDuration"
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Arrow from "./arrow"
 export function Flight({startDate, endDate, airplane, fileName, id}: {startDate: Date, endDate: Date, airplane: String, fileName: String, id: String}) {
     function toTimeStr(date: Date) {

@@ -15,7 +15,12 @@
     font-family: archivo;
 }
 .property {
-    color: white;
+    color: black;
     font-family: archivo;
     font-size: 4vmin;
+}
+@media (prefers-color-scheme: dark) {
+    .property {
+        color: white;
+    }
 }
