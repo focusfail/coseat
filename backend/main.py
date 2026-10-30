@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from ml.models import FlightData
 from tempfile import TemporaryFile
 import sqlite3
@@ -51,7 +51,7 @@ async def get_flight_list():
 
 @app.get("/api/flight")
 async def get_flight(id: int = 0):
-    res = cur.execute("SELECT * from flights WHERE id = (?)", str(id))
+    res = cur.execute("SELECT * from flights WHERE id = (?)", (id,))
     data = res.fetchone()
     try:
         with open(data['csv']) as f:
@@ -61,8 +61,11 @@ async def get_flight(id: int = 0):
                 "startDate": data['startDate'],
                 "endDate": data['endDate'],
                 "airplane": data['airplane'], 
+                "fileName": Path(data['csv']).stem,
                 "json": s,
             }
+        if data is None:
+            raise HTTPException(status_code=404, detail="Flight not found")
     except IOError as e:
         return {
             "id": data['id'],
@@ -75,3 +78,19 @@ async def get_flight(id: int = 0):
             "friendlyMessage": "Konnte die Flugdatei nicht finden. Das Problem lässt sich vermutlich durch ein neues Hochladen lösen."
         }
 
+@app.delete("/api/flight")
+async def delete_flight(id: int = 0):
+    res = cur.execute("SELECT csv FROM flights WHERE id = (?)", (id,))
+    data = res.fetchone()
+    if data is None:
+        raise HTTPException(status_code=404, detail="Flight not found")
+
+    cur.execute("DELETE FROM flights WHERE id = (?)", (id,))
+    con.commit()
+
+    try:
+        os.remove(data["csv"])
+    except FileNotFoundError:
+        pass
+
+    return {"result": "Flight deleted"}

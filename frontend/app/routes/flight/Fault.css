@@ -1,0 +1,16 @@
+.faultContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80vmin;
+    padding: 5px 10px;
+    background-color: #8e0045;
+    color: lightgray;
+}
+@media (prefers-color-scheme: dark) {
+    .faultContainer {
+        background-color: #ff3898;
+        color: black;
+    }
+}

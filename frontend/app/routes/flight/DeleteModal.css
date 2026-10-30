@@ -1,0 +1,86 @@
+    .modal-header {
+        margin-bottom: 1vmin;
+    }
+
+    .modal-title {
+        font-size: 2.5vmin;
+        font-family: archivo;
+        color: #8e0045;
+        margin: 0;
+    }
+
+    .modal-body {
+        font-family: archivo;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        font-family: archivo;
+        gap: 1vmin;
+    }
+
+    .btn-secondary {
+        padding: 0.5rem 1rem;
+        background: transparent;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .btn-danger {
+        padding: 0.5rem 1rem;
+        background: #8e0045;
+        color: white;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+
+    .btn-danger:hover {
+        background: #8e0045;
+    }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(2px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: white;
+        border-radius: 0.5rem;
+        max-width: 400px;
+        width: 100%;
+        padding: 2.5vmin;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+@media (prefers-color-scheme: dark) {
+    .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+        background-color: #1e1e1e;
+        color: white;
+    }
+    .modal-title {
+        color: #ff3898;
+    }
+    .btn-secondary {
+        border-color: #ff3898;
+        color: white;
+    }
+    .btn-danger {
+        background: #ff3898;
+    }
+}
