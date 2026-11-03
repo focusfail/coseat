@@ -69,6 +69,13 @@ class FlightData(BaseModel):
     airframe_name: str = Field(default_factory=str)
 
     @staticmethod
+    def read(path: Path) -> "FlightData":
+        if path.suffix == ".txt":
+            return FlightData.read_xplane12(path)
+        else:
+            return FlightData.read_csv(path)
+
+    @staticmethod
     def read_csv(path: Path) -> "FlightData":
         fd = FlightData()
         fd.engine_0 = EngineData()
