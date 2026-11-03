@@ -1,7 +1,7 @@
 import csv
 from datetime import timedelta
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Literal
 from pprint import pprint
 
 from pydantic import BaseModel, Field
@@ -63,7 +63,7 @@ class TransformData(BaseModel):
 
 
 class FlightData(BaseModel):
-    kind: str = "csv"
+    kind: Literal["csv", "xplane12"] = "csv"
     engine_0: Optional[EngineData] = None
     engine_1: Optional[EngineData] = None
     transform: TransformData = None
