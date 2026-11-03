@@ -63,6 +63,7 @@ class TransformData(BaseModel):
 
 
 class FlightData(BaseModel):
+    kind: str = "csv"
     engine_0: Optional[EngineData] = None
     engine_1: Optional[EngineData] = None
     transform: TransformData = None
@@ -134,6 +135,7 @@ class FlightData(BaseModel):
         fd.engine_0 = EngineData()
         fd.engine_1 = EngineData()
         fd.transform = TransformData()
+        fd.kind = "xplane12"
 
         with open(path, "r") as xplane_file:
             lines = [ll for l in xplane_file if (ll := l.strip())]
