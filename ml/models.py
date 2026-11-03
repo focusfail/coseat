@@ -177,7 +177,4 @@ class FlightData(BaseModel):
                 # )
 
             pprint(headers)
-            pprint(data_lines)
-            pprint(flight)
-
         return fd
