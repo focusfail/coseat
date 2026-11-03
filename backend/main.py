@@ -21,7 +21,7 @@ async def create_upload_file(file: UploadFile):
         with open(file.filename, "wb") as f:
             content = await file.read()
             f.write(content)
-        mldata = FlightData.read_csv("./" + file.filename)
+        mldata = FlightData.read(Path("./" + file.filename))
         os.makedirs("./flights", exist_ok=True)
         filepath = "./flights/" + file.filename[:-4] + ".json"
         with open(filepath, "w") as f:
