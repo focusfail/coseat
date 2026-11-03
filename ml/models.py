@@ -66,7 +66,7 @@ class FlightData(BaseModel):
     kind: Literal["csv", "xplane12"] = "csv"
     engine_0: Optional[EngineData] = None
     engine_1: Optional[EngineData] = None
-    transform: TransformData = None
+    transform: Optional[TransformData] = None
     timestamps: List[str] = Field(default_factory=list)
     airframe_name: str = Field(default_factory=str)
 
