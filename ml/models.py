@@ -1,6 +1,7 @@
 import csv
 from pathlib import Path
 from typing import List, Optional
+from pprint import pprint
 
 from pydantic import BaseModel, Field
 
@@ -16,7 +17,7 @@ class EngineData(BaseModel):
     oil_temperature: List[float] = Field(default_factory=list)
 
     def append_datapoints(
-     self,
+        self,
         power: float,
         rpm: float,
         fuel_f: float,
@@ -31,6 +32,7 @@ class EngineData(BaseModel):
         self.oil_pressure.append(oil_p)
         self.oil_temperature.append(oil_t)
 
+
 class TransformData(BaseModel):
     ias: List[float] = Field(default_factory=list)
     lat: List[float] = Field(default_factory=list)
@@ -41,7 +43,7 @@ class TransformData(BaseModel):
     vspd: List[float] = Field(default_factory=list)
 
     def append_datapoints(
-     self,
+        self,
         ias: float,
         lat: float,
         lon: float,
@@ -115,5 +117,33 @@ class FlightData(BaseModel):
         # Check if plane has 1 or 2 engines
         if all(v == -0.0 for v in fd.engine_1.power):
             fd.engine_1 = None
+
+        return fd
+
+    @staticmethod
+    def read_xplane12(path: Path) -> "FlightData":
+        fd = FlightData()
+        fd.engine_0 = EngineData()
+        fd.engine_1 = EngineData()
+        fd.transform = TransformData()
+
+        with open(path, "r") as xplane_file:
+            lines = [ll for l in xplane_file if (ll := l.strip())]
+            headers = [hh for h in lines[0].split("|") if (hh := h.strip())]
+            data_lines = [
+                [d.strip() for d in ll] for l in lines[1:] if (ll := l.split("|"))
+            ]
+
+            flight = []
+            for line in data_lines:
+                data = {}
+                for i, header in enumerate(headers):
+                    data[header] = line[i]
+
+                flight.append(data)
+
+            pprint(headers)
+            pprint(data_lines)
+            pprint(flight)
 
         return fd
