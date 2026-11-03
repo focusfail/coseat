@@ -141,13 +141,40 @@ class FlightData(BaseModel):
                 [d.strip() for d in ll] for l in lines[1:] if (ll := l.split("|"))
             ]
 
-            flight = []
-            for line in data_lines:
-                data = {}
-                for i, header in enumerate(headers):
-                    data[header] = line[i]
+            data = [dict(zip(headers, line)) for line in data_lines]
+            for row in data:
+                time_str = str(timedelta(hours=float(row["_zulu,_time"])))
+                time_str = time_str.split(".")[0]  # remove ms
+                fd.timestamps.append(f"2026-11-03 {time_str}")
 
-                flight.append(data)
+                fd.engine_0.append_datapoints(
+                    power=0.0,  # missing
+                    rpm=0.0,  # missing
+                    oil_p=float(row["OILP1,__psi"]),
+                    oil_t=float(row["OILT1,__deg"]),
+                    fuel_p=float(row["FUEP1,__psi"]),
+                    fuel_f=0.0,  # missing
+                )
+
+                fd.transform.append_datapoints(
+                    ias=float(row["_Vind,_kias"]),
+                    lat=float(row["__lat,__deg"]),
+                    lon=float(row["__lon,__deg"]),
+                    alt=float(row["p-alt,ftMSL"]),
+                    pitch=float(row["pitch,__deg"]),
+                    roll=float(row["_roll,__deg"]),
+                    vspd=0.0,  # missing
+                )
+
+                # TODO: engine 2 if available
+                # fd.engine_1.append_datapoints(
+                #     power=0.0,  # missing
+                #     rpm=0.0,  # missing
+                #     oil_p=float(row["OILP1,__psi"]),
+                #     oil_t=float(row["OILT1,__deg"]),
+                #     fuel_p=float(row["FUELP1,__psi"]),
+                #     fuel_f=0.0,  # missing
+                # )
 
             pprint(headers)
             pprint(data_lines)
