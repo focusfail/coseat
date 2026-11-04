@@ -12,9 +12,9 @@ Post-flight motor analysis using a machine learning model.
 
 ## how to run
 **prerequisites**:
-- npm
-- just
-- uv 
+- [npm](https://www.npmjs.com/)
+- [just](https://github.com/casey/just)
+- [uv](https://docs.astral.sh/uv/)
 
 ```sh
 git clone https://github.com/focusfail/coseat.git
