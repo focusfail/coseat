@@ -91,9 +91,90 @@
     color: #8e0045;
     cursor: pointer;
 }
-.deleteButton:hover,
-.deleteButton:focus-visible {
-    background: rgba(142, 0, 69, 0.12);
+.kindDiv {
+    background-color: #8e0045;
+    color: #e7e7e7;
+    width: max-content;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    height: 4vh;
+    font-family: archivo;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1.5rem;
+    font-size: 2.2vmin;
+}
+@media (max-width: 768px) {
+    .chartContainer {
+        grid-template-columns: 1fr !important;
+        width: 100%;
+    }
+    .chartDiv {
+        padding-left: 0px;
+        width: 100%;
+    }
+    .flightTitleDiv {
+        gap: 14px;
+        padding: 8px;
+        font-size: 7vmin;
+    }
+    .propertyTitle,
+    .chartTitle {
+        font-size: 4vmin;
+    }
+    .property {
+        font-size: 6vmin;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        overflow-wrap: anywhere;
+    }
+    .chartDiv {
+        padding-left: 0;
+        min-width: 0;
+        overflow-x: auto;
+    }
+    .fileNameDiv {
+        gap: 0.5rem;
+        min-width: 0;
+        align-items: flex-start;
+    }
+    .fileNameTitle {
+        min-width: 0;
+        font-size: 4.5vmin;
+        overflow-wrap: anywhere;
+    }
+    .material-icons {
+        font-size: 5vmin;
+    }
+}
+@media (max-width: 480px) {
+    .flightTitleDiv {
+        gap: 10px;
+        padding: 6px;
+        font-size: 8vmin;
+    }
+    .propertyTitle,
+    .chartTitle {
+        font-size: 5vmin;
+    }
+    .property {
+        font-size: 7vmin;
+    }
+    .chartContainer {
+        gap: 12px;
+    }
+    .loadingSpinner {
+        min-height: 9rem;
+    }
+    .loadingSpinner span {
+        width: 2rem;
+        height: 2rem;
+    }
+    .deleteButton {
+        padding: 0.25rem;
+    }
 }
 @media (prefers-color-scheme: dark) {
     .loadingSpinner span {
@@ -120,4 +201,9 @@
     .deleteButton {
         color: #ff3898;
     }
+    .kindDiv {
+        background-color: #ff3898;
+        color:#121212;
+    }
+
 }

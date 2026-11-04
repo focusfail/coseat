@@ -36,12 +36,18 @@ body {
 .headerLabel {
   color: black;
   text-decoration: none;
+  text-decoration-thickness: 0;
+  text-decoration-color: transparent;
+  border-bottom: none !important;
+  outline: none !important;
+  -webkit-text-decoration-color: transparent !important;
 }
 @media (prefers-color-scheme: dark) {
   .header {
     background-color: #1f1f1f66;
   }
   .headerLabel {
-    color: white;
+    color: white !important;
+    text-decoration: none !important;
   }
 }

@@ -14,7 +14,7 @@ con = sqlite3.connect("coseat.db")
 con.row_factory = sqlite3.Row
 cur = con.cursor()
 cur.execute(
-    "CREATE TABLE IF NOT EXISTS flights(id INTEGER PRIMARY KEY, startDate DATE NOT NULL, endDate DATE NOT NULL, airplane TEXT NOT NULL, csv TEXT NOT NULL)"
+    "CREATE TABLE IF NOT EXISTS flights(id INTEGER PRIMARY KEY, startDate DATE NOT NULL, endDate DATE NOT NULL, airplane TEXT NOT NULL, csv TEXT NOT NULL, kind TEXT NOT NULL)"
 )
 
 
@@ -36,10 +36,11 @@ async def create_upload_file(file: UploadFile):
             date.strptime(mljson.get("timestamps")[-1], "%Y-%m-%d %H:%M:%S"),
             mljson.get("airframe_name"),
             filepath,
+            mljson.get("kind")
         ]
         print(data)
         cur.execute(
-            "INSERT INTO flights (startDate, endDate, airplane, csv) VALUES (?, ?, ?, ?)",
+            "INSERT INTO flights (startDate, endDate, airplane, csv, kind) VALUES (?, ?, ?, ?, ?)",
             data,
         )
         con.commit()
@@ -51,7 +52,7 @@ async def create_upload_file(file: UploadFile):
 
 @app.get("/api/flightList")
 async def get_flight_list():
-    res = cur.execute("SELECT id, startDate, endDate, airplane, csv from flights")
+    res = cur.execute("SELECT id, startDate, endDate, airplane, csv, kind from flights")
     return res.fetchall()
 
 
@@ -68,6 +69,7 @@ async def get_flight(id: int = 0):
                 "endDate": data["endDate"],
                 "airplane": data["airplane"],
                 "fileName": Path(data["csv"]).stem,
+                "kind": data["kind"],
                 "json": s,
             }
         if data is None:

@@ -2,7 +2,7 @@ import "./Flight.css"
 import Takeoff from "./Takeoff"
 import { timeDuration } from "../../utils/timeDuration"
 import Arrow from "./arrow"
-export function Flight({startDate, endDate, airplane, fileName, id}: {startDate: Date, endDate: Date, airplane: String, fileName: String, id: String}) {
+export function Flight({startDate, endDate, airplane, fileName, id, kind}: {startDate: Date, endDate: Date, airplane: String, fileName: String, id: String, kind: String}) {
     function toTimeStr(date: Date) {
         var flightDate = date
         const options = {

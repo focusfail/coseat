@@ -22,7 +22,7 @@ export default function Header() {
 function HeaderElement({label, link, prefetch, children}: {label: string, link: string, prefetch: string, children: ReactElement}) {
     return(
         <div style={{display: "flex", flexDirection: "row"}}>
-            <Link to={link}>
+            <Link to={link} style={{color: "inherit", textDecoration: "none", borderBottom: "none"}}>
             <span className="headerElements">{children}</span>
             <span className="headerLabel">{label}</span>
             </Link>

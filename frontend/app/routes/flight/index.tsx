@@ -23,10 +23,28 @@ export function HydrateFallback() {
   )
 }
 
+function checkExists(string: String) {
+  if (string) {
+    return string
+  } else {
+    return "Nicht angegeben"
+  }
+}
+
+function showKind(kind: String) {
+  if (kind == "xplane12") {
+    return "X-Plane 12";
+  } else if (kind == "csv") {
+    return "CSV";
+  } else {
+    return "N/A"
+  }
+}
+
 export default function Index({loaderData}: Route.ComponentProps) {
   let params = useParams();
   const navigate = useNavigate();
-  const {id, airplane, startDate, endDate, fileName, json} = loaderData
+  const {id, airplane, startDate, endDate, fileName, json, kind} = loaderData
   var {error, friendlyMessage, message} = loaderData
   if (!error) {
     try {
@@ -98,10 +116,12 @@ export default function Index({loaderData}: Route.ComponentProps) {
           <span className="fileNameTitle">
             {fileName}
           </span>
+          <div className="kindDiv">
+            {showKind(flightData.kind)}
+          </div>
           <button
             className="deleteButton"
             type="button"
-            aria-label="Flug löschen"
             title="Flug löschen"
             onClick={() => handleDeleteClick(id)}
           >
@@ -123,7 +143,7 @@ export default function Index({loaderData}: Route.ComponentProps) {
             Flugzeug
           </span>
           <span className="property">
-            {airplane}
+            {checkExists(airplane)}
           </span>
         </div>
         <div className="propertyDiv">
@@ -204,7 +224,7 @@ export default function Index({loaderData}: Route.ComponentProps) {
         onClose={() => setIsDeleteConfirmOpen(false)}
         onConfirm={confirmDelete}
         title="Flug wirklich löschen?"
-        message="Möchtest du den Flug wirklich löschen? Er kann danach nicht wiederhergestellt werden."
+        message=""
       />
     </>
   )
