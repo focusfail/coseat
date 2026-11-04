@@ -160,7 +160,7 @@ class FlightData(BaseModel):
         lines = [ll for l in xplane_file if (ll := l.strip())]
         headers = [hh for h in lines[0].split("|") if (hh := h.strip())]
         data_lines = [
-            [d.strip() for d in ll] for l in lines[1:] if (ll := l.split("|"))
+            [d.strip() for d in ll] for l in lines[1::10] if (ll := l.split("|"))
         ]
 
         data = [dict(zip(headers, line)) for line in data_lines]
