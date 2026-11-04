@@ -1,8 +1,8 @@
 ![coseat - Logo](https://github.com/focusfail/coseat/blob/master/logo.svg)
 
+---
+Post-flight motor analysis using a machine learning model.
 
-# coseat
-Post flight motor analysis using a machine learning model.
 
 ## features
 - supports Garmin G1000 and X-Plane 12 logs
