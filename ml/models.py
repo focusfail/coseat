@@ -2,7 +2,7 @@ import io
 import csv
 from datetime import timedelta
 from pathlib import Path
-from typing import List, Optional, Literal, TextIO, Union, BinaryIO, Text
+from typing import Any, Dict, List, Optional, Literal, TextIO, Union, BinaryIO, Text
 from pprint import pprint
 
 from pydantic import BaseModel, Field
@@ -70,6 +70,16 @@ class FlightData(BaseModel):
     transform: Optional[TransformData] = None
     timestamps: List[str] = Field(default_factory=list)
     airframe_name: str = Field(default_factory=str)
+    anomaly_scores: List[float] = Field(default_factory=list)
+    anomaly_events: List[Dict[str, Any]] = Field(default_factory=list)
+    anomaly_model: str = ""
+
+    def compute_anomaly_scores(self) -> "FlightData":
+        from .anomaly.inference import analyse_flight, model_version
+
+        self.anomaly_scores, self.anomaly_events = analyse_flight(self)
+        self.anomaly_model = model_version()
+        return self
 
     @staticmethod
     def read(
@@ -107,7 +117,7 @@ class FlightData(BaseModel):
 
         info_line = csvfile.readline()
         fd.airframe_name = get_airframe_name(info_line)
-        csvfile.readline()  # skip unit row
+        csvfile.readline()
         reader = csv.DictReader(csvfile, delimiter=",")
 
         for row in reader:
@@ -142,7 +152,6 @@ class FlightData(BaseModel):
             time = row.get("Lcl Time")
             fd.timestamps.append(f"{date} {time}")
 
-        # Check if plane has 1 or 2 engines
         if all(v == -0.0 for v in fd.engine_1.power):
             fd.engine_1 = None
 
@@ -166,16 +175,16 @@ class FlightData(BaseModel):
         data = [dict(zip(headers, line)) for line in data_lines]
         for row in data:
             time_str = str(timedelta(hours=float(row["_zulu,_time"])))
-            time_str = time_str.split(".")[0]  # remove ms
+            time_str = time_str.split(".")[0]
             fd.timestamps.append(f"2026-11-03 {time_str}")
 
             fd.engine_0.append_datapoints(
-                power=0.0,  # missing
-                rpm=0.0,  # missing
+                power=0.0,
+                rpm=0.0,
                 oil_p=float(row["OILP1,__psi"]),
                 oil_t=float(row["OILT1,__deg"]),
                 fuel_p=float(row["FUEP1,__psi"]),
-                fuel_f=0.0,  # missing
+                fuel_f=0.0,
             )
 
             fd.transform.append_datapoints(
@@ -185,9 +194,8 @@ class FlightData(BaseModel):
                 alt=float(row["p-alt,ftMSL"]),
                 pitch=float(row["pitch,__deg"]),
                 roll=float(row["_roll,__deg"]),
-                vspd=0.0,  # missing
+                vspd=0.0,
             )
 
-            # TODO: engine 2 if available
 
         return fd

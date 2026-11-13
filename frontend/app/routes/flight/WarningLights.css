@@ -1,0 +1,35 @@
+.warningLights {
+    --warn-yellow: #a86d00; 
+    --warn-red: #cc1a1a;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+@media (prefers-color-scheme: dark) {
+    .warningLights {
+        --warn-yellow: #ffb300;
+        --warn-red: #ff4d4d;
+    }
+}
+.warningLight {
+    display: grid;
+    place-items: center;
+    height: 4vh;
+    aspect-ratio: 1;
+    cursor: help;
+}
+.warningLight svg {
+    width: 100%;
+    height: 100%;
+}
+.warningLight.yellow {
+    color: var(--warn-yellow);
+}
+.warningLight.red {
+    color: var(--warn-red);
+}
+@media (max-width: 768px) {
+    .warningLight {
+        height: 7vmin;
+    }
+}

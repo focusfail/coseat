@@ -7,9 +7,14 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
+  optimizeDeps: {
+    include: [
+      "recharts",
+    ],
+  },
   server: {
     proxy: {
-      '/api/': "http://localhost:8000"
+      '/api/': "http://localhost:8001"
     }
   }
 });

@@ -1,5 +1,6 @@
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from ml.models import FlightData
+from ml.anomaly.inference import model_version
 from tempfile import TemporaryFile
 import sqlite3
 import os
@@ -8,8 +9,6 @@ import datetime as dt
 import json
 
 app = FastAPI()
-# with open("coseat.db", "w") as _:  # ensure db exists
-#     pass
 con = sqlite3.connect("coseat.db")
 con.row_factory = sqlite3.Row
 cur = con.cursor()
@@ -18,12 +17,38 @@ cur.execute(
 )
 
 
+def score(fd: FlightData) -> FlightData:
+    try:
+        fd.compute_anomaly_scores()
+    except Exception as e:
+        print(f"Anomalie-Erkennung fehlgeschlagen: {e}")
+    return fd
+
+
+def with_scores(path: str, content: str) -> str:
+    try:
+        data = json.loads(content)
+        current = len(data.get("anomaly_scores") or []) == len(data.get("timestamps") or [])
+        if current and "anomaly_events" in data and data.get("anomaly_model") == model_version():
+            return content
+        fd = score(FlightData.model_validate(data))
+        if len(fd.anomaly_scores) != len(fd.timestamps):
+            return content
+        scored = json.dumps(fd.dict())
+        with open(path, "w") as f:
+            f.write(scored)
+        return scored
+    except Exception as e:
+        print(f"Nachträgliche Bewertung fehlgeschlagen: {e}")
+        return content
+
+
 @app.post("/api/csv")
 async def create_upload_file(file: UploadFile):
     try:
         print("bro printe doch was ich crash out")
         jsonified: FlightData
-        mldata = FlightData.read(await file.read(), file.filename)
+        mldata = score(FlightData.read(await file.read(), file.filename))
         os.makedirs("./flights", exist_ok=True)
         filepath = "./flights/" + file.filename.split(".")[0] + ".json"
         with open(filepath, "w") as f:
@@ -62,7 +87,7 @@ async def get_flight(id: int = 0):
     data = res.fetchone()
     try:
         with open(data["csv"]) as f:
-            s = f.read()
+            s = with_scores(data["csv"], f.read())
             return {
                 "id": data["id"],
                 "startDate": data["startDate"],
