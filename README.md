@@ -3,6 +3,8 @@
 ---
 Post-flight motor analysis using a machine learning model.
 
+> [!NOTE]
+> This project is experimental and not intended for production or operational use.
 
 ## features
 - supports Garmin G1000 and X-Plane 12 logs
